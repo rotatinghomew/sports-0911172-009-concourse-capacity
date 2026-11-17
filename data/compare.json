@@ -1,0 +1,77 @@
+[
+  [
+    "analysis.coverage",
+    {
+      "window_minutes": 15
+    }
+  ],
+  [
+    "analysis.evaluate",
+    {
+      "id": "ev-halftime-1",
+      "plans": [
+        {
+          "name": "加开窗口",
+          "shifts": [
+            {
+              "worker": "w3",
+              "window": "v3",
+              "skill": "hot",
+              "start": "2026-08-01T19:40:00",
+              "end": "2026-08-01T20:10:00"
+            }
+          ],
+          "preparation": []
+        },
+        {
+          "name": "提前备餐",
+          "shifts": [],
+          "preparation": [
+            {
+              "ingredient": "rice",
+              "units": 40,
+              "servings": 30,
+              "at": "2026-08-01T19:20:00"
+            }
+          ]
+        }
+      ],
+      "constraints": {
+        "immovable": [
+          "w0"
+        ],
+        "window_skill": {
+          "v3": "hot"
+        }
+      },
+      "assumptions": {
+        "prep_service_gain_seconds": 15,
+        "serving_cost_cents": 500
+      }
+    }
+  ],
+  [
+    "scenarios.save",
+    {
+      "id": "plan-halftime",
+      "shifts": [
+        {
+          "worker": "w3",
+          "window": "v3",
+          "skill": "hot",
+          "start": "2026-08-01T19:40:00",
+          "end": "2026-08-01T20:10:00"
+        }
+      ],
+      "preparation": [],
+      "reason": "按 ev-halftime-1 比较结果采纳加开窗口；该评估的基线回放未通过历史检验，负责人决定先行试排一场再复评",
+      "evaluation": "ev-halftime-1"
+    }
+  ],
+  [
+    "scenarios.adopt",
+    {
+      "id": "plan-halftime"
+    }
+  ]
+]

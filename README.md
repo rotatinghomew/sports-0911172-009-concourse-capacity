@@ -1,6 +1,6 @@
 # 场馆餐饮队列工作台
 
-这是体育商业团队使用的本地业务工具，现有能力包括人工业务登记、状态核对、事务执行和变更追溯。经营数据采用本地合成记录，不含真实个人资料，也不需要外部账户。现有业务操作见 `docs/业务约定.md`，当前不提供自动统计建模或自动经营决策。
+这是体育商业团队使用的本地业务工具，现有能力包括人工业务登记、状态核对、事务执行、变更追溯，以及基于历史记录的容量情景比较（加开窗口、提前备餐等）。经营数据采用本地合成记录，不含真实个人资料，也不需要外部账户。现有业务操作见 `docs/业务约定.md`，容量比较的口径、观察边界与不能推荐的范围见 `docs/容量比较.md`。
 
 ## 环境与运行
 
@@ -20,6 +20,14 @@ python3 -m product inspect --db /tmp/concourse-capacity.sqlite3
 
 ```bash
 python3 -m product replay --file data/demo.json
+```
+
+容量比较需要先回放历史样本，再执行 `data/compare.json` 中的覆盖检查、方案评估、情景保存与采纳：
+
+```bash
+python3 -m product replay --db /tmp/halftime.sqlite3 --file data/history.json
+python3 -m product replay --db /tmp/halftime.sqlite3 --file data/compare.json
+python3 -m product inspect --db /tmp/halftime.sqlite3
 ```
 
 ## 测试与编译

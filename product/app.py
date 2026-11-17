@@ -7,12 +7,13 @@ from .queueing import Queueing
 from .kitchen import Kitchen
 from .staffing import Staffing
 from .scenarios import Scenarios
+from .analysis import Analysis
 
 
 class Application:
     def __init__(self, path=':memory:'):
         self.store=Store(path)
-        self.services={'queueing':Queueing(self.store),'kitchen':Kitchen(self.store),'staffing':Staffing(self.store),'scenarios':Scenarios(self.store)}
+        self.services={'queueing':Queueing(self.store),'kitchen':Kitchen(self.store),'staffing':Staffing(self.store),'scenarios':Scenarios(self.store),'analysis':Analysis(self.store)}
 
     def execute(self, command, arguments):
         service, separator, operation=command.partition('.')
