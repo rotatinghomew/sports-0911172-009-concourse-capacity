@@ -4,7 +4,11 @@
 
 ## 环境与运行
 
-使用 Python 3.11，依赖只有标准库和内置 SQLite。无须安装任何第三方运行库。全部演示离线执行，写入用户指定的本地数据库；不指定数据库时只在内存中运行，不产生文件。
+使用 Python 3.11，业务运行只使用标准库和内置 SQLite。测试与打包另需安装精确锁定的构建工具；Docker 镜像与冻结任务环境均在准备阶段安装它们，正式业务回放不访问网络。全部演示离线执行，写入用户指定的本地数据库；不指定数据库时只在内存中运行，不产生文件。
+
+```bash
+python3 -m pip install -r requirements-build.txt
+```
 
 ```bash
 python3 -m product demo
@@ -23,6 +27,8 @@ python3 -m product replay --file data/demo.json
 ```bash
 python3 -m unittest discover -s tests -v
 python3 -m compileall -q product tests
+python3 -m build --wheel --no-isolation
+sh scripts/verify.sh
 ```
 
 测试覆盖业务链、非法操作回滚、重复编号、变更历史与磁盘重启。演示与测试的数据互相隔离，重复执行使用新的内存实例；持久库内的重复业务编号会被拒绝，不要在同一个库中重复导入演示。
